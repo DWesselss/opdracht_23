@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Emoji Loop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #emoji {
+      font-size: 50px;
+      transition: transform 0.3s, color 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="emoji">😀</div>
+
+  <script>
+    // 1. Array met minstens vijf emoji’s
+    const emojis = ["😀", "🚀", "🔥", "🌈", "😎", "🍕"];
+
+    // 2. Eerste emoji tonen
+    const emojiElement = document.getElementById("emoji");
+    let index = 0;
+
+    emojiElement.textContent = emojis[index];
+
+    // Kleuren voor de bonus
+    const colors = ["red", "blue", "green", "purple", "orange", "teal"];
+
+    let intervalId;
+
+    function startLoop() {
+      intervalId = setInterval(() => {
+        index++;
+
+        // 4. Terug naar begin als we aan het eind zijn
+        if (index >= emojis.length) {
+          clearInterval(intervalId);
+
+          // Bonus: korte vertraging voordat de loop opnieuw begint
+          setTimeout(() => {
+            index = 0;
+            startLoop();
+          }, 1000); // 1 seconde pauze
+
+          return;
+        }
+
+        // Emoji wisselen
+        emojiElement.textContent = emojis[index];
+
+        // Bonus: groter maken en kleur veranderen
+        emojiElement.style.transform = "scale(1.4)";
+        emojiElement.style.color = colors[index % colors.length];
+
+        // Terug animeren naar normaal formaat
+        setTimeout(() => {
+          emojiElement.style.transform = "scale(1)";
+        }, 300);
+
+      }, 500); // 3. Elke halve seconde
+    }
+
+    startLoop();
+  </script>
+
+</body>
+</html>
